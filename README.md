@@ -20,8 +20,15 @@ Or install it yourself as:
 
 ## Usage
 
+```
+% bundle exec rspec ./spec -f json -o rspec.json
+% ruby -r 'circleci/test_report' -e "puts CircleCI::TestReport.create_xml(rspec_json: File.read('rspec.json'))" >> junit_format.xml
+```
+
 ```ruby
-CircleCI::TestReport.create_from_rspec_json(filename: 'junit.xml', rspec_json: rspec_json_text)
+require "circleci/test_report"
+
+CircleCI::TestReport.create_xml(rspec_json: File.read('spec.json'))
 ```
 
 ## Development

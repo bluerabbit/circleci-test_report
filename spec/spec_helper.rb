@@ -1,5 +1,7 @@
 require "bundler/setup"
 require "circleci/test_report"
+require "pry"
+require "active_support/all"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
