@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require "circleci/test_report/cli"
+
+CircleCI::TestReport::Cli.start
