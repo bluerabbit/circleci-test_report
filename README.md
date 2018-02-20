@@ -22,13 +22,13 @@ Or install it yourself as:
 
 ```
 % bundle exec rspec ./spec -f json -o rspec.json
-% ruby -r 'circleci/test_report' -e "puts CircleCI::TestReport.create_xml(rspec_json: File.read('rspec.json'))" >> junit_format.xml
+% circleci-test_report -f rspec.json -o junit_format.xml
 ```
 
 ```ruby
 require "circleci/test_report"
 
-CircleCI::TestReport.create_xml(rspec_json: File.read('spec.json'))
+xml_text = CircleCI::TestReport.create_xml(rspec_json: File.read('rspec.json'))
 ```
 
 ## Development

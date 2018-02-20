@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary     = "Create Test metadata for CircleCI"
   spec.description = "Create Test metadata for CircleCI"
-  spec.homepage    = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage    = "https://github.com/bluerabbit/circleci-test_report"
   spec.license     = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "builder"
+  spec.add_runtime_dependency "thor"
 
   spec.add_development_dependency "activesupport"
   spec.add_development_dependency "bundler", "~> 1.16"
