@@ -7,7 +7,7 @@ require "json"
 module CircleCI
   module TestReport
     class << self
-      def create_xml(rspec_json: , timestamp: Time.now.iso8601, hostname: "unknown")
+      def create_xml(rspec_json:, timestamp: Time.now.iso8601, hostname: "unknown")
         rspec_hash = JSON.parse(rspec_json)
         summary    = rspec_hash["summary"]
 
@@ -29,14 +29,14 @@ module CircleCI
           testcase.file      = example["file_path"]
           testcase.time      = example["run_time"]
           case example["status"]
-            when "failed"
-              testcase.failure = {
-                message: example["exception"]["message"],
-                type:    example["exception"]["class"],
-                text:    example["exception"]["backtrace"].join("\n")
-              }
-            when "pending"
-              testcase.skipped = true
+          when "failed"
+            testcase.failure = {
+              message: example["exception"]["message"],
+              type:    example["exception"]["class"],
+              text:    example["exception"]["backtrace"].join("\n")
+            }
+          when "pending"
+            testcase.skipped = true
           end
           suite.add_test_case(testcase)
         end

@@ -34,7 +34,7 @@ module CircleCI
                              timestamp: timestamp,
                              hostname:  hostname) do |testsuite|
 
-          testsuite.properties {|p| p.property(name: "seed", value: seed)}
+          testsuite.properties { |p| p.property(name: "seed", value: seed) }
 
           test_cases.each do |test_case|
             testsuite.testcase(classname: test_case.classname,
