@@ -30,10 +30,11 @@ module CircleCI
           testcase.time      = example["run_time"]
           case example["status"]
           when "failed"
+            exception = example["exception"]
             testcase.failure = {
-              message: example["exception"]["message"],
-              type:    example["exception"]["class"],
-              text:    example["exception"]["backtrace"].join("\n")
+              message: exception["message"],
+              type:    exception["class"],
+              text:    exception["backtrace"] ? exception["backtrace"].join("\n") : ''
             }
           when "pending"
             testcase.skipped = true

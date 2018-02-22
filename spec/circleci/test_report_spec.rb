@@ -92,9 +92,9 @@ RSpec.describe CircleCI::TestReport do
             "exception"        => {
               "class"     => "RuntimeError",
               "message"   => "error message",
-              "backtrace" => ["/path/to/spec/your_spec.rb:2:in `foo'",
-                              "/path/to/spec/your_spec.rb:1:in `<main>'"]
-            } }],
+              "backtrace" => backtrace
+            }},
+         ],
          "summary"      => {
            "duration"                         => 0.000001,
            "example_count"                    => 1,
@@ -105,16 +105,36 @@ RSpec.describe CircleCI::TestReport do
          "summary_line" => "1 examples, 1 failure, 0 pending" }
       end
 
-      it do
-        is_expected.to eq(['<?xml version="1.0" encoding="UTF-8"?>',
-                           '<testsuite name="rspec" tests="1" skipped="0" failures="1" errors="0" time="1.0e-06" timestamp="2018-01-01T00:00:00+00:00" hostname="unknown">',
-                           "<properties>",
-                           '<property name="seed" value="0"/>',
-                           "</properties>",
-                           '<testcase classname="spec.your_spec" name="full_description" file="./spec/your_spec.rb" time="1.0e-06">',
-                           %Q(<failure message="error message" type="RuntimeError">/path/to/spec/your_spec.rb:2:in `foo'\n/path/to/spec/your_spec.rb:1:in `&lt;main&gt;'</failure>),
-                           "</testcase>",
-                           "</testsuite>"].join)
+      context "backtrace is not nil" do
+        let(:backtrace) {["/path/to/spec/your_spec.rb:2:in `foo'", "/path/to/spec/your_spec.rb:1:in `<main>'"]}
+
+        it do
+          is_expected.to eq(['<?xml version="1.0" encoding="UTF-8"?>',
+                             '<testsuite name="rspec" tests="1" skipped="0" failures="1" errors="0" time="1.0e-06" timestamp="2018-01-01T00:00:00+00:00" hostname="unknown">',
+                             "<properties>",
+                             '<property name="seed" value="0"/>',
+                             "</properties>",
+                             '<testcase classname="spec.your_spec" name="full_description" file="./spec/your_spec.rb" time="1.0e-06">',
+                             %Q(<failure message="error message" type="RuntimeError">/path/to/spec/your_spec.rb:2:in `foo'\n/path/to/spec/your_spec.rb:1:in `&lt;main&gt;'</failure>),
+                             "</testcase>",
+                             "</testsuite>"].join)
+        end
+      end
+
+      context "backtrace is nil" do
+        let(:backtrace) { nil }
+
+        it do
+          is_expected.to eq(['<?xml version="1.0" encoding="UTF-8"?>',
+                             '<testsuite name="rspec" tests="1" skipped="0" failures="1" errors="0" time="1.0e-06" timestamp="2018-01-01T00:00:00+00:00" hostname="unknown">',
+                             "<properties>",
+                             '<property name="seed" value="0"/>',
+                             "</properties>",
+                             '<testcase classname="spec.your_spec" name="full_description" file="./spec/your_spec.rb" time="1.0e-06">',
+                             '<failure message="error message" type="RuntimeError"></failure>',
+                             "</testcase>",
+                             "</testsuite>"].join)
+        end
       end
     end
   end
