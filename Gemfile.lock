@@ -54,11 +54,11 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
-  bundler (~> 1.16)
+  bundler (~> 2.2.33)
   circleci-test_report!
   pry-byebug
   rake (~> 13.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
-   1.16.1
+   2.2.33
